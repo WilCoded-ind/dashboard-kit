@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { ChevronRight } from 'lucide-react';
 
 export default function Dashboard() {
     return (
@@ -28,16 +29,9 @@ export default function Dashboard() {
                             </li>
                             <li>
                                 <div className="flex items-center">
-                                    <svg
-                                        className="h-6 w-6 text-gray-400"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path d="M7.05 4.05a.5.5 0 1 0-.707.707L10.293 8l-3.95 3.95a.5.5 0 1 0 .707.707l4.646-4.647a.5.5 0 0 0 0-.707L7.05 4.05z" />
-                                    </svg>
+                                    <ChevronRight className="h-4 w-4 text-gray-400" />
                                     <a
-                                        href="#"
+                                        href="/roles"
                                         className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2"
                                     >
                                         Roles & Permissions
@@ -57,24 +51,6 @@ export default function Dashboard() {
                     </span>
                 </div>
 
-                {/* stat */}
-                {/* <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-3">
-                    <Card className="gap-1 p-4">
-                        <h3 className="text-md font-semibold">Total Users</h3>
-                        <span>123</span>
-                    </Card>
-                    <Card className="gap-1 p-4">
-                        <h3 className="text-md font-semibold">Active Users</h3>
-                        <span>987</span>
-                    </Card>
-                    <Card className="gap-1 p-4">
-                        <h3 className="text-md font-semibold">
-                            Inactive Users
-                        </h3>
-                        <span>247</span>
-                    </Card>
-                </div> */}
-
                 {/* body */}
                 <div className="mb-2 flex flex-wrap justify-start gap-2 md:justify-end">
                     {/* tombol header */}
@@ -84,22 +60,6 @@ export default function Dashboard() {
                             + Add New Role
                         </Button>
                     </a>
-                    
-
-                    {/* filter */}
-                    {/* <Button variant="secondary" size="sm">
-                        Filter Data
-                    </Button> */}
-
-                    {/* export */}
-                    {/* <Button variant="secondary" size="sm">
-                        Export Excel
-                    </Button> */}
-
-                    {/* import */}
-                    {/* <Button variant="secondary" size="sm">
-                        Import Excel
-                    </Button> */}
                 </div>
 
                 {/* garis pembatas */}
