@@ -11,17 +11,14 @@ export default function AuthSimpleLayout({
         <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
             <div className="w-full max-w-sm">
                 <div className="flex flex-col gap-8">
-                    <div className="flex flex-col items-center gap-4">
-                        <Link
-                            href={home()}
-                            className="flex flex-col items-center gap-2 font-medium"
-                        >
-                            <div className="flex h-16 w-16 items-center justify-center">
-                                <img src="/images/logo.png" alt="FahleviLabs" />
-                            </div>
-                            <span className="sr-only">{title}</span>
-                        </Link>
+                    <div className="flex flex-col items-center">
+                        
+                        {/* logo */}
+                        <div className="flex h-24 w-24 items-center justify-center">
+                            <img src="/images/logo-new.png" alt="FahleviLabs" />
+                        </div>
 
+                        {/* deskripsi dan title */}
                         <div className="space-y-2 text-center">
                             <h1 className="text-xl font-medium">{title}</h1>
                             <p className="text-center text-sm text-muted-foreground">
@@ -29,6 +26,8 @@ export default function AuthSimpleLayout({
                             </p>
                         </div>
                     </div>
+
+                    {/* card login */}
                     {children}
                 </div>
             </div>
