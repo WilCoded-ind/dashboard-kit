@@ -25,12 +25,6 @@ export default function Login({
     return (
         <>
             <Head title="Log in" />
-
-            {/* <Form
-                {...store.form()}
-                resetOnSuccess={['password']}
-                className="flex flex-col gap-6 shadow-lg rounded-xl border p-6 "
-            > */}
             <Form
                 {...store.form()}
                 resetOnSuccess={['password']}
@@ -101,9 +95,9 @@ export default function Login({
 
                         {canRegister && (
                             <div className="text-center text-sm text-muted-foreground">
-                                Belum punya akun?{' '}
+                                Don't have an account?{' '}
                                 <TextLink href={register()} tabIndex={5}>
-                                    Daftar sekarang
+                                    Register now
                                 </TextLink>
                             </div>
                         )}
