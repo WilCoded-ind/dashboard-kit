@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('slug')->unique();
+            $table->string('url')->nullable();
             $table->foreignId('parent_id')->nullable()->constrained('menus')->nullOnDelete();
             $table->integer('order')->default(0);
             $table->string('icon')->nullable();

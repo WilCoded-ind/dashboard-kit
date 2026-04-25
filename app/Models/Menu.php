@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'slug', 'parent_id', 'order', 'icon'])]
+#[Fillable(['name', 'slug', 'url', 'parent_id', 'order', 'icon'])]
 class Menu extends Model
 {
     use HasFactory;
