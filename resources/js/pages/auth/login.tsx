@@ -26,16 +26,21 @@ export default function Login({
         <>
             <Head title="Log in" />
 
-            <Form
+            {/* <Form
                 {...store.form()}
                 resetOnSuccess={['password']}
                 className="flex flex-col gap-6 shadow-lg rounded-xl border p-6 "
-            >
+            > */}
+            <Form
+                {...store.form()}
+                resetOnSuccess={['password']}
+                className="flex flex-col gap-6"
+            >    
                 {({ processing, errors }) => (
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Alamat Email</Label>
+                                <Label htmlFor="email">Email</Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -51,14 +56,14 @@ export default function Login({
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password">Kata Sandi</Label>
+                                    <Label htmlFor="password">Password</Label>
                                     {canResetPassword && (
                                         <TextLink
                                             href={request()}
                                             className="ml-auto text-sm"
                                             tabIndex={5}
                                         >
-                                            Lupa Kata Sandi?
+                                            Forgot Password?
                                         </TextLink>
                                     )}
                                 </div>
@@ -79,7 +84,7 @@ export default function Login({
                                     name="remember"
                                     tabIndex={3}
                                 />
-                                <Label htmlFor="remember">Ingat saya</Label>
+                                <Label htmlFor="remember">Remember me</Label>
                             </div>
 
                             <Button
@@ -116,6 +121,6 @@ export default function Login({
 }
 
 Login.layout = {
-    title: 'Masuk ke akun kamu',
-    description: 'Masukkan email dan password untuk masuk ke akun kamu',
+    title: 'Enter your account',
+    description: 'Enter your email and password to log in to your account',
 };
