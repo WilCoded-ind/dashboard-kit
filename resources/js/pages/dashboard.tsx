@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
-import { dashboard } from '@/routes';
 import { Card } from '@/components/ui/card';
+import { dashboard } from '@/routes';
 
 export default function Dashboard() {
     return (

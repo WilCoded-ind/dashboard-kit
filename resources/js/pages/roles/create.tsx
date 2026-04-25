@@ -1,9 +1,9 @@
 import { Head } from '@inertiajs/react';
-import { Card } from '@/components/ui/card';
+import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ChevronRight } from 'lucide-react';
 
 export default function CreateRole() {
     return (
