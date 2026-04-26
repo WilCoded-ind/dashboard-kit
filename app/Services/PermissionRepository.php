@@ -13,7 +13,7 @@ class PermissionService implements PermissionServiceInterface
     ) {}
 
     // method - ambil data permission berdasarkan role id
-    public function getByRoleID (int $roleId): Collection
+    public function getByRoleId(int $roleId): Collection
     {
         return $this->permissionRepository->getByRoleId($roleId);
     }

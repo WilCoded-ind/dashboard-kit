@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -19,10 +20,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('users/{user}', 'users/show')->name('users.show');
 
     // route - role
-    Route::inertia('roles', 'roles/index')->name('roles.index');
-    Route::inertia('roles/create', 'roles/create')->name('roles.create');
-    Route::inertia('roles/{role}/edit', 'roles/edit')->name('roles.edit');
-    Route::inertia('roles/{role}', 'roles/show')->name('roles.show');
+    Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::post('roles', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::put('roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::get('roles/{role}/permissions', [RoleController::class, 'permission'])->name('roles.permissions');
+    Route::put('roles/{role}/permissions', [RoleController::class, 'updatePermission'])->name('roles.permissions.update');
 
     // route - permission
     Route::inertia('permissions', 'permissions/index')->name('permissions.index');
