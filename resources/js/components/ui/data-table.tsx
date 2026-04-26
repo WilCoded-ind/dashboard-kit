@@ -88,8 +88,8 @@ export function DataTable<Tdata, Tvalue>({
             {/* toolbar */}
             <div className="flex items-center justify-between">
                 {/* show entries */}
-                <div>
-                    <span>Show</span>
+                <div className='flex items-center gap-2'>
+                    <span className='text-sm'>Show</span>
 
                     <Select
                         value={String(pageSize)}
@@ -98,7 +98,7 @@ export function DataTable<Tdata, Tvalue>({
                             setPageIndex(0);
                         }}
                     >
-                        <SelectTrigger className="w-17">
+                        <SelectTrigger className="w-17 border-dark" size='sm'>
                             <SelectValue />
                         </SelectTrigger>
 
@@ -110,7 +110,7 @@ export function DataTable<Tdata, Tvalue>({
                             ))}
                         </SelectContent>
                     </Select>
-                    <span>entries</span>
+                    <span className='text-sm'>entries</span>
                 </div>
 
                 {/* search */}
@@ -128,7 +128,7 @@ export function DataTable<Tdata, Tvalue>({
             </div>
 
             {/* table */}
-            <div>
+            <div className='border rounded-lg shadow-sm bg-white'>
                 <Table>
                     {/* header */}
                     <TableHeader>
