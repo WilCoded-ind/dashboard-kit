@@ -26,7 +26,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'role_id' => Role::query()->create([
+            'roles_id' => Role::query()->create([
                 'name' => fake()->unique()->jobTitle(),
                 'initials' => strtoupper(fake()->unique()->lexify('???')),
             ])->id,

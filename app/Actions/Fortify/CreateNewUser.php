@@ -31,7 +31,7 @@ class CreateNewUser implements CreatesNewUsers
         ]);
 
         return User::create([
-            'role_id' => $role?->id,
+            'roles_id' => $role?->id,
             'name' => $input['name'],
             'username' => $input['username'],
             'email' => $input['email'],

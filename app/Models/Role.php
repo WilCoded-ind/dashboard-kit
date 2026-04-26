@@ -14,7 +14,7 @@ class Role extends Model
     // relasi role dengan user - role bisa dimiliki banyak user
     public function users()
     {
-        return $this->hasMany(User::class, 'role_id');
+        return $this->hasMany(User::class, 'roles_id');
     }
 
     // relasi role dengan permission - role bisa memiliki lebih dari 1 permission
