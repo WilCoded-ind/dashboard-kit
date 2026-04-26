@@ -8,10 +8,10 @@ use App\Repositories\Contracts\MenuRepositoryInterface;
 
 class MenuRepository implements MenuRepositoryInterface
 {
-    // method - ambil semua data menu
+    // method - ambil semua data menu 
     public function getAll(): Collection
     {
-        return Menu::all();
+        return Menu::with('children')->whereNull('parent_id')->orderBy('order')->get();
     }
 
     // method - ambil data menu berdasarkan id
