@@ -4,6 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { dashboard } from '@/routes';
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 
 export default function Dashboard() {
     return (
@@ -11,42 +19,30 @@ export default function Dashboard() {
             <Head title="User Management" />
             <div className="max-w-8xl overflow-x-auto rounded-xl p-4 md:p-8">
                 {/* breadcrumbs */}
-                <div>
-                    {/* breadcrumbs sementara buat preview aja */}
-                    <nav
-                        className="flex justify-start pb-4"
-                        aria-label="Breadcrumb"
-                    >
-                        <ol className="inline-flex items-center space-x-1 md:space-x-3">
-                            <li className="inline-flex items-center">
-                                <a
-                                    href="/dashboard"
-                                    className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
-                                >
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li>
-                                <div className="flex items-center">
-                                    <ChevronRight className="h-4 w-4 text-gray-400" />
-                                    <a
-                                        href="/roles"
-                                        className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2"
-                                    >
-                                        Roles & Permissions
-                                    </a>
-                                </div>
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
+                <Breadcrumb className='pb-3'>
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="#">
+                                Administrator
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Roles & Permissions</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
 
                 {/* header */}
                 <div className="mb-4">
                     <h1 className="text-2xl font-bold">Roles & Permissions</h1>
                     <span className="text-md text-gray-600/90">
-                        Manage your application's roles and permissions for better access
-                        control and security.
+                        Manage your application's roles and permissions for
+                        better access control and security.
                     </span>
                 </div>
 
