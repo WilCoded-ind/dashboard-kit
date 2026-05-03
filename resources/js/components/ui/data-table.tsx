@@ -1,7 +1,6 @@
 // import
 import type {
     ColumnDef,
-    ColumnFiltersState,
     SortingState,
     VisibilityState,
 } from '@tanstack/react-table';
@@ -11,7 +10,8 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -30,78 +30,81 @@ import {
     TableRow,
 } from '@/components/ui/table';
 
+// pagination meta
+interface Meta {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+    from: number;
+    to: number;
+}
+
+// interface props
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
+    meta: Meta;
 }
 
 // export
-export function DataTable<Tdata, Tvalue>({
+export function DataTable<TData, TValue>({
     columns,
     data,
-}: DataTableProps<Tdata, Tvalue>) {
+    meta,
+}: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
-        {},
-    );
-    const [globalFilter, setGlobalFilter] = useState('');
-    const [pageSize, setPageSize] = useState(10);
-    const [pageIndex, setPageIndex] = useState(0);
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+    const [search, setSearch] = useState('');
+    const [perPage, setPerPage] = useState(meta.per_page);
+
+    // debounce search
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            router.get(
+                window.location.pathname,
+                { search, per_page: perPage, page: 1 },
+                { preserveState: true, replace: true },
+            );
+        }, 400);
+        return () => clearTimeout(timeout);
+    }, [search]);
 
     const table = useReactTable({
         data,
         columns,
-        state: {
-            sorting,
-            columnFilters,
-            columnVisibility,
-            globalFilter,
-            pagination: { pageIndex, pageSize },
-        },
-
+        state: { sorting, columnVisibility },
         onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
         onColumnVisibilityChange: setColumnVisibility,
-        onGlobalFilterChange: setGlobalFilter,
-        onPaginationChange: (updater) => {
-            const next =
-                typeof updater === 'function'
-                    ? updater({ pageIndex, pageSize })
-                    : updater;
-            setPageIndex(next.pageIndex);
-            setPageSize(next.pageSize);
-        },
-
         getCoreRowModel: getCoreRowModel(),
-        manualPagination: false,
-        manualSorting: false,
-        manualFiltering: false,
+        manualPagination: true,
+        manualSorting: true,
+        manualFiltering: true,
+        pageCount: meta.last_page,
     });
-
-    const totalRows = table.getFilteredRowModel().rows.length;
-    const from = pageIndex * pageSize + 1;
-    const to = Math.min((pageIndex + 1) * pageSize, totalRows);
 
     return (
         <div className="space-y-4">
             {/* toolbar */}
             <div className="flex items-center justify-between">
                 {/* show entries */}
-                <div className='flex items-center gap-2'>
-                    <span className='text-sm'>Show</span>
-
+                <div className="flex items-center gap-2">
+                    <span className="text-sm">Show</span>
                     <Select
-                        value={String(pageSize)}
+                        value={String(perPage)}
                         onValueChange={(val) => {
-                            setPageSize(Number(val));
-                            setPageIndex(0);
+                            const newPerPage = Number(val);
+                            setPerPage(newPerPage);
+                            router.get(
+                                window.location.pathname,
+                                { search, per_page: newPerPage, page: 1 },
+                                { preserveState: true, replace: true },
+                            );
                         }}
                     >
-                        <SelectTrigger className="w-17 border-dark bg-muted" size='sm'>
+                        <SelectTrigger className="w-17 border-dark bg-muted" size="sm">
                             <SelectValue />
                         </SelectTrigger>
-
                         <SelectContent>
                             {[10, 20, 30, 40, 50].map((size) => (
                                 <SelectItem key={size} value={String(size)}>
@@ -110,18 +113,15 @@ export function DataTable<Tdata, Tvalue>({
                             ))}
                         </SelectContent>
                     </Select>
-                    <span className='text-sm'>entries</span>
+                    <span className="text-sm">entries</span>
                 </div>
 
                 {/* search */}
                 <div>
                     <Input
                         placeholder="Search..."
-                        value={globalFilter ?? ''}
-                        onChange={(e) => {
-                            setGlobalFilter(e.target.value);
-                            setPageIndex(0);
-                        }}
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                         className="max-w-sm"
                     />
                 </div>
@@ -129,8 +129,7 @@ export function DataTable<Tdata, Tvalue>({
 
             {/* table */}
             <div className="overflow-hidden rounded-lg bg-white shadow-md">
-                <Table >
-                    {/* header */}
+                <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
@@ -139,8 +138,7 @@ export function DataTable<Tdata, Tvalue>({
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
+                                                  header.column.columnDef.header,
                                                   header.getContext(),
                                               )}
                                     </TableHead>
@@ -148,8 +146,6 @@ export function DataTable<Tdata, Tvalue>({
                             </TableRow>
                         ))}
                     </TableHeader>
-
-                    {/* body */}
                     <TableBody>
                         {table.getRowModel().rows.length ? (
                             table.getRowModel().rows.map((row) => (
@@ -181,9 +177,9 @@ export function DataTable<Tdata, Tvalue>({
             {/* footer */}
             <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">
-                    {totalRows === 0
+                    {meta.total === 0
                         ? 'No entries'
-                        : `Showing ${from} to ${to} of ${totalRows} entries`}
+                        : `Showing ${meta.from} to ${meta.to} of ${meta.total} entries`}
                 </span>
 
                 {/* pagination */}
@@ -191,26 +187,44 @@ export function DataTable<Tdata, Tvalue>({
                     <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => setPageIndex(0)}
-                        disabled={!table.getCanPreviousPage()}
+                        onClick={() =>
+                            router.get(
+                                window.location.pathname,
+                                { search, per_page: perPage, page: 1 },
+                                { preserveState: true, replace: true },
+                            )
+                        }
+                        disabled={meta.current_page === 1}
                     >
                         «
                     </Button>
                     <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => setPageIndex((p) => p - 1)}
-                        disabled={!table.getCanPreviousPage()}
+                        onClick={() =>
+                            router.get(
+                                window.location.pathname,
+                                { search, per_page: perPage, page: meta.current_page - 1 },
+                                { preserveState: true, replace: true },
+                            )
+                        }
+                        disabled={meta.current_page === 1}
                     >
                         ‹
                     </Button>
 
-                    {Array.from({ length: table.getPageCount() }, (_, i) => (
+                    {Array.from({ length: meta.last_page }, (_, i) => (
                         <Button
                             key={i}
-                            variant={pageIndex === i ? 'default' : 'outline'}
+                            variant={meta.current_page === i + 1 ? 'default' : 'outline'}
                             size="sm"
-                            onClick={() => setPageIndex(i)}
+                            onClick={() =>
+                                router.get(
+                                    window.location.pathname,
+                                    { search, per_page: perPage, page: i + 1 },
+                                    { preserveState: true, replace: true },
+                                )
+                            }
                         >
                             {i + 1}
                         </Button>
@@ -219,16 +233,28 @@ export function DataTable<Tdata, Tvalue>({
                     <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => setPageIndex((p) => p + 1)}
-                        disabled={!table.getCanNextPage()}
+                        onClick={() =>
+                            router.get(
+                                window.location.pathname,
+                                { search, per_page: perPage, page: meta.current_page + 1 },
+                                { preserveState: true, replace: true },
+                            )
+                        }
+                        disabled={meta.current_page === meta.last_page}
                     >
                         ›
                     </Button>
                     <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => setPageIndex(table.getPageCount() - 1)}
-                        disabled={!table.getCanNextPage()}
+                        onClick={() =>
+                            router.get(
+                                window.location.pathname,
+                                { search, per_page: perPage, page: meta.last_page },
+                                { preserveState: true, replace: true },
+                            )
+                        }
+                        disabled={meta.current_page === meta.last_page}
                     >
                         »
                     </Button>

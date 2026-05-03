@@ -4,53 +4,57 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 
 export default function CreateUser() {
     return (
         <>
             <Head title="User Management" />
-            <div className="max-w-8xl overflow-x-auto rounded-xl p-4 md:p-8">
+            <div className="max-w-8xl overflow-x-auto rounded-xl p-2 md:px-6">
                 {/* breadcrumbs */}
-                <div>
-                    {/* breadcrumbs sementara buat preview aja */}
-                    <nav
-                        className="flex justify-start pb-4"
-                        aria-label="Breadcrumb"
-                    >
-                        <ol className="inline-flex items-center space-x-1 md:space-x-3">
-                            <li className="inline-flex items-center">
-                                <a
-                                    href="/dashboard"
-                                    className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
-                                >
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li>
-                                <div className="flex items-center">
-                                    <ChevronRight className="h-4 w-4 text-gray-400" />
-                                    <a
-                                        href="/users"
-                                        className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2"
-                                    >
-                                        Users
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="flex items-center">
-                                    <ChevronRight className="h-4 w-4 text-gray-400" />
-                                    <a
-                                        href="#"
-                                        className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2"
-                                    >
-                                        Add New User
-                                    </a>
-                                </div>
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
+                <Breadcrumb className="pb-3">
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/dashboard">
+                                Dashboard
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="#">
+                                Administrator
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/users">
+                                User Management
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Create New User</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
 
                 {/* header */}
                 <div className="">
@@ -71,124 +75,155 @@ export default function CreateUser() {
                         <div className="border-t border-gray-400/70 shadow" />
 
                         <div className="mt-3">
-                            <Card className="md:w-1/2 p-5 md:p-6">
+                            <Card className="p-5 md:w-1/2 md:p-6">
                                 <div className="flex flex-col text-left">
                                     <h1 className="text-xl font-bold">
                                         Form New User
                                     </h1>
                                     <span className="text-sm text-muted-foreground">
-                                        Fields marked with <span className='text-destructive'>*</span> are required
+                                        Fields marked with{' '}
+                                        <span className="text-destructive">
+                                            *
+                                        </span>{' '}
+                                        are required
                                     </span>
                                 </div>
 
                                 <div className="pt-6">
                                     {/* form */}
-                                    <div className="flex flex-col gap-4">
-                                        {/* nama user */}
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                                            <Label>
-                                                Name
-                                                <span className="text-destructive">
-                                                    *
-                                                </span>
-                                            </Label>
-                                            <Input
-                                                type="text"
-                                                placeholder="Enter name"
-                                                className="w-full col-span-2"
-                                            />
-                                        </div>
+                                    <form action="" method="post">
+                                        <div className="flex flex-col gap-4">
+                                            {/* foto */}
+                                            <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                                                <Label>
+                                                    Photo
+                                                </Label>
+                                                <div className="grid grid-cols-1 items-center gap-2 md:grid-cols-2">
 
-                                        {/* username */}
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                                            <Label>
-                                                Username
-                                                <span className="text-destructive">
-                                                    *
-                                                </span>
-                                            </Label>
-                                            <Input
-                                                type="text"
-                                                placeholder="Enter username"
-                                                className="w-full col-span-2"
-                                            />
-                                        </div>
+                                                    {/* preview */}
+                                                    <img
+                                                        src="https://source.unsplash.com/random/200x200?face"
+                                                        alt="Preview"
+                                                        className="h-24 w-24 rounded-xl border border-gray-300/50 object-cover"
+                                                    />
+                                                    <Input
+                                                        type="file"
+                                                        className="col-span-2 w-full"
+                                                    />
+                                                </div>
+                                            </div>
 
-                                        {/* email */}
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                                            <Label>
-                                                Email
-                                                <span className="text-destructive">
-                                                    *
-                                                </span>
-                                            </Label>
-                                            <Input
-                                                type="email"
-                                                placeholder="Enter email"
-                                                className="w-full col-span-2"
-                                            />
-                                        </div>
+                                            {/* nama user */}
+                                            <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                                                <Label>
+                                                    Name
+                                                    <span className="text-destructive">
+                                                        *
+                                                    </span>
+                                                </Label>
+                                                <Input
+                                                    type="text"
+                                                    placeholder="Enter name"
+                                                    className="col-span-2 w-full"
+                                                />
+                                            </div>
 
-                                        {/* password */}
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                                            <Label>
-                                                Password
-                                                <span className="text-destructive">
-                                                    *
-                                                </span>
-                                            </Label>
-                                            <Input
-                                                type="password"
-                                                placeholder="Enter password"
-                                                className="w-full col-span-2"
-                                            />
-                                        </div>
+                                            {/* username */}
+                                            <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                                                <Label>
+                                                    Username
+                                                    <span className="text-destructive">
+                                                        *
+                                                    </span>
+                                                </Label>
+                                                <Input
+                                                    type="text"
+                                                    placeholder="Enter username"
+                                                    className="col-span-2 w-full"
+                                                />
+                                            </div>
 
-                                        {/* konfirmasi password */}
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                                            <Label>
-                                                Confirm Password
-                                                <span className="text-destructive">
-                                                    *
-                                                </span>
-                                            </Label>
-                                            <Input
-                                                type="password"
-                                                placeholder="Re-enter password"
-                                                className="w-full col-span-2"
-                                            />
-                                        </div>
+                                            {/* email */}
+                                            <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                                                <Label>
+                                                    Email
+                                                    <span className="text-destructive">
+                                                        *
+                                                    </span>
+                                                </Label>
+                                                <Input
+                                                    type="email"
+                                                    placeholder="Enter email"
+                                                    className="col-span-2 w-full"
+                                                />
+                                            </div>
 
-                                        {/* role */}
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                                            <Label>
-                                                Role
-                                                <span className="text-destructive">
-                                                    *
-                                                </span>
-                                            </Label>
+                                            {/* password */}
+                                            <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                                                <Label>
+                                                    Password
+                                                    <span className="text-destructive">
+                                                        *
+                                                    </span>
+                                                </Label>
+                                                <Input
+                                                    type="password"
+                                                    placeholder="Enter password"
+                                                    className="col-span-2 w-full"
+                                                />
+                                            </div>
 
-                                            <Input
-                                                type="text"
-                                                placeholder="Choose Role"
-                                                className="w-full col-span-2"
-                                            />
+                                            {/* konfirmasi password */}
+                                            <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                                                <Label>
+                                                    Confirm Password
+                                                    <span className="text-destructive">
+                                                        *
+                                                    </span>
+                                                </Label>
+                                                <Input
+                                                    type="password"
+                                                    placeholder="Re-enter password"
+                                                    className="col-span-2 w-full"
+                                                />
+                                            </div>
+
+                                            {/* role */}
+                                            <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                                                <Label>
+                                                    Role
+                                                    <span className="text-destructive">
+                                                        *
+                                                    </span>
+                                                </Label>
+
+                                                <Select>
+                                                    <SelectTrigger className="w-full">
+                                                        <SelectValue placeholder="Theme" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectItem value="role">
+                                                                roles
+                                                            </SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                                 {/* border */}
                                 <div className="border-t border-gray-400/30" />
 
                                 {/* button */}
-                                <div className='flex justify-end gap-2'>
+                                <div className="flex justify-end gap-2">
                                     {/* simpan */}
-                                    <Button className=''>
-                                        Save
-                                    </Button>
+                                    <Button className="">Save</Button>
 
                                     {/* batal */}
-                                    <a href="/roles">
-                                        <Button variant="outline" className=''>
+                                    <a href="/users">
+                                        <Button variant="outline" className="">
                                             Cancel
                                         </Button>
                                     </a>

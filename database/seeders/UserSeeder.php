@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
         $roleIds = Role::query()->pluck('id')->all();
 
         $users = [
+            'Wildan Ahmad',
             'Budi Santoso',
             'Siti Aminah',
             'Agus Pratama',

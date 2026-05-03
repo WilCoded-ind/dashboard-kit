@@ -111,7 +111,7 @@ export default function RoleIndex({ roles }: { roles: any }) {
 
                 {/* datatable */}
                 <div className="mt-3">
-                    <DataTable columns={columns} data={roles.data} />
+                    <DataTable columns={columns} data={roles.data} meta={roles}/>
                 </div>
             </div>
         </>

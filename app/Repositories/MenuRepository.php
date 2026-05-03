@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Models\Menu;
 use App\Repositories\Contracts\MenuRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use App\Models\Permission;
 
 class MenuRepository implements MenuRepositoryInterface
 {
@@ -19,6 +21,29 @@ class MenuRepository implements MenuRepositoryInterface
             )
             ->orderBy($params['sort'] ?? 'id', $params['direction'] ?? 'asc')
             ->paginate($params['per_page'] ?? 10);
+    }
+
+    // method - ambil data menu untuk sidebar berdasarkan role id
+    public function getForSidebar(int $roleId): Collection
+    {
+        // ambil menu id yang boleh diakses berdasarkan role id
+        $allowedMenuIds = Permission::where('role_id', $roleId)
+            ->where('can_view', true)
+            ->pluck('menu_id');
+
+        // ambil data menu beserta children yang boleh diakses berdasarkan menu id yang sudah didapat
+        return Menu::with(['children' => function($q) use ($allowedMenuIds) {
+                $q->whereIn('id', $allowedMenuIds)->orderBy('order');
+            }])
+            ->whereNull('parent_id')
+            ->where(function($q) use ($allowedMenuIds) {
+                $q->whereIn('id', $allowedMenuIds)
+                  ->orWhereHas('children', function($q2) use ($allowedMenuIds) {
+                      $q2->whereIn('id', $allowedMenuIds);
+                  });
+            })
+            ->orderBy('order')
+            ->get();
     }
 
     // method - ambil data menu berdasarkan id

@@ -1,5 +1,4 @@
-import { Link } from '@inertiajs/react';
-import { Folder, LayoutGrid, ShieldCheck, UserRoundCog, UsersRound } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -13,32 +12,10 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import type { NavItem } from '@/types';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Users Management',
-        href: '/users',
-        icon: UsersRound,
-    },
-    {
-        title: 'Roles & Permissions',
-        href: '/roles',
-        icon: UserRoundCog,
-    },
-    {
-        title: 'Menu Management',
-        href: '/menus',
-        icon: Folder,
-    },
-];
 
 export function AppSidebar() {
+    const { menus } = usePage().props as any;
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -54,7 +31,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain menus={menus ?? []} />
             </SidebarContent>
 
             <SidebarFooter>

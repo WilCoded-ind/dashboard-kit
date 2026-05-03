@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['role_id', 'menu_id', 'can_create', 'can_read', 'can_update', 'can_delete'])]
+#[Fillable(['role_id', 'menu_id', 'can_create', 'can_view', 'can_update', 'can_delete'])]
 class Permission extends Model
 {
     use HasFactory;

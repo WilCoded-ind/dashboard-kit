@@ -4,11 +4,15 @@ namespace App\Repositories\Contracts;
 
 use App\Models\Menu;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 interface MenuRepositoryInterface
 {
     // ambil semua data menu
     public function getAll(array $params): LengthAwarePaginator;
+
+    // ambil data menu untuk sidebar berdasarkan role id
+    public function getForSidebar(int $roleId): Collection;
 
     // ambil data menu berdasarkan id
     public function findById(int $id): Menu;

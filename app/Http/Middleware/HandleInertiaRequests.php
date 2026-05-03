@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\Contracts\MenuServiceInterface;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -35,6 +36,14 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $menus = [];
+
+        if($request->user()) {
+            $menus = app(MenuServiceInterface::class)
+                ->getForSidebar($request->user()->role_id)
+                ->toArray();
+        }
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -42,6 +51,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'menus' => $menus,
         ];
     }
 }

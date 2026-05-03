@@ -6,6 +6,7 @@ use App\Models\Menu;
 use App\Repositories\Contracts\MenuRepositoryInterface;
 use App\Services\Contracts\MenuServiceInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class MenuService implements MenuServiceInterface
 {
@@ -18,6 +19,12 @@ class MenuService implements MenuServiceInterface
     public function getAll(array $params): LengthAwarePaginator
     {
         return $this->menuRepository->getAll($params);
+    }
+
+    // method - ambil data Menu untuk sidebar berdasarkan role id
+    public function getForSidebar(int $roleId): Collection
+    {
+        return $this->menuRepository->getForSidebar($roleId);
     }
 
     // method - ambil data Menu berdasarkan id

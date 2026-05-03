@@ -10,12 +10,14 @@ import {
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { router } from '@inertiajs/react';
-import { Trash, Pen, Eye } from 'lucide-react';
+import { Trash, Pen, Eye, SlidersHorizontal, Plus, FileInput, FileOutput } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 // datatable
 import { DataTable } from '@/components/ui/data-table';
-import { ColumnDef } from '@tanstack/react-table';
+import {
+  ColumnDef,
+} from "@tanstack/react-table"
 
 // autocount total users, active users, inactive users
 // total users
@@ -157,23 +159,23 @@ export default function UserIndex({ users }: { users: any }) {
                     {/* add */}
                     <a href="users/create">
                         <Button variant="secondary" size="sm">
-                            Add New User
+                            <Plus/> Add New
                         </Button>
                     </a>
 
                     {/* filter */}
                     <Button variant="secondary" size="sm">
-                        Filter Data
-                    </Button>
-
-                    {/* export */}
-                    <Button variant="secondary" size="sm">
-                        Export Excel
+                        <SlidersHorizontal/> Filter Data
                     </Button>
 
                     {/* import */}
                     <Button variant="secondary" size="sm">
-                        Import Excel
+                        <FileInput/> Import Data
+                    </Button>
+
+                    {/* export */}
+                    <Button variant="secondary" size="sm">
+                        <FileOutput/> Export data
                     </Button>
                 </div>
 
@@ -182,7 +184,7 @@ export default function UserIndex({ users }: { users: any }) {
 
                 {/* datatable */}
                 <div className="mt-3">
-                    <DataTable columns={columns} data={userRows} />
+                    <DataTable columns={columns} data={userRows} meta={users}/>
                 </div>
             </div>
         </>

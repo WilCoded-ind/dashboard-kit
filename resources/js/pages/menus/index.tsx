@@ -126,7 +126,7 @@ export default function MenusIndex({ menus }: { menus: any }) {
 
                 {/* datatable */}
                 <div className="mt-3">
-                    <DataTable columns={columns} data={menuRows} />
+                    <DataTable columns={columns} data={menuRows} meta={menus}/>
                 </div>
             </div>
         </>
