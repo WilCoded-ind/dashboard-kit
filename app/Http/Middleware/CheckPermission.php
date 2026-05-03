@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckPermission
 {
-    public function handle(Request $request, Closure $next, string $permission = 'can_view'): Response {
+    public function handle(Request $request, Closure $next, string $permissionField = 'can_view'): Response {
         $user = $request->user();
 
         if (!$user) {
@@ -32,7 +32,7 @@ class CheckPermission
             ->where('menu_id', $menu->id)
             ->first();
  
-        if (!$permission || !$permission->$permission) {
+        if (!$permission || !$permission->{$permissionField}) {
             return redirect('/not-found');
         }
 

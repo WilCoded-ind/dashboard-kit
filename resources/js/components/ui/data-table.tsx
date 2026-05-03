@@ -98,7 +98,7 @@ export function DataTable<Tdata, Tvalue>({
                             setPageIndex(0);
                         }}
                     >
-                        <SelectTrigger className="w-17 border-dark" size='sm'>
+                        <SelectTrigger className="w-17 border-dark bg-muted" size='sm'>
                             <SelectValue />
                         </SelectTrigger>
 
@@ -128,8 +128,8 @@ export function DataTable<Tdata, Tvalue>({
             </div>
 
             {/* table */}
-            <div className='border rounded-lg shadow-sm bg-white'>
-                <Table>
+            <div className="overflow-hidden rounded-lg bg-white shadow-md">
+                <Table >
                     {/* header */}
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (

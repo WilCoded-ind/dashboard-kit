@@ -12,6 +12,7 @@ class UserRepository implements UserRepositoryInterface
     public function getAll(array $params): LengthAwarePaginator
     {
         return User::query()
+            ->with('role')
             // search
             ->when($params['search'] ?? null, fn($q, $search) =>
             $q->where('name', 'like', "%$search%")

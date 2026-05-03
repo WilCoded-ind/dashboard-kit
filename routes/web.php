@@ -17,8 +17,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['checkPermission'])->group(function () {
         // roles
         Route::resource('roles', RoleController::class)->except(['show']);
-        Route::get('roles/{role}/permission', [RoleController::class. 'permission'])->name('roles.permission');
-        Route::put('roles/{role}/permission', [RoleController::class. 'updatePermission'])->name('roles.updatePermission');
+        Route::get('roles/{role}/permission', [RoleController::class, 'permission'])->name('roles.permission');
+        Route::put('roles/{role}/permission', [RoleController::class, 'updatePermission'])->name('roles.updatePermission');
 
         // menu
         Route::resource('menus', MenuController::class)->except(['show']);
@@ -29,5 +29,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
 require __DIR__.'/settings.php';
