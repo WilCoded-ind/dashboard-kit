@@ -32,11 +32,6 @@ const mainNavItems: NavItem[] = [
         icon: UserRoundCog,
     },
     {
-        title: 'Permissions',
-        href: '/permissions',
-        icon: ShieldCheck,
-    },
-    {
         title: 'Menu Management',
         href: '/menus',
         icon: Folder,

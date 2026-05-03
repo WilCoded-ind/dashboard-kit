@@ -11,12 +11,29 @@ import {
 } from '@/components/ui/breadcrumb';
 import { router } from '@inertiajs/react';
 import { Trash, Pen, Eye } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 // datatable
 import { DataTable } from '@/components/ui/data-table';
 import { ColumnDef } from '@tanstack/react-table';
 
-// definisi kolom
+// autocount total users, active users, inactive users
+// total users
+
+
+// total user aktif
+
+
+// total user nonaktif
+
+// search, filter, export, import, pagination, sorting, dll bisa pakai fitur bawaan datatable atau custom sesuai kebutuhan
+// search
+const handleSearch = (query: string) => {
+    // implementasi search, bisa pakai debounce untuk performa lebih baik
+    console.log('Searching for:', query);
+};
+
+// datatable
 const columns: ColumnDef<any>[] = [
     {
         accessorKey: 'name',
@@ -31,8 +48,22 @@ const columns: ColumnDef<any>[] = [
         header: 'Role',
     },
     {
+        accessorKey: 'is_active',
+        header: 'Status',
+        cell: ({ row }) => (
+            <Badge variant={row.original.is_active ? "default" : "destructive"}>
+                {row.original.is_active ? 'Active' : 'Inactive'}
+            </Badge>
+        ),
+    },
+    {
         accessorKey: 'email',
         header: 'Email Address',
+        cell: ({ row }) => (
+            <a href={`mailto:${row.original.email}`} className="text-blue-700 hover:underline">
+                {row.original.email}
+            </a>
+        ),
     },
     {
         id: 'actions',

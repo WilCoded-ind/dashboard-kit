@@ -21,6 +21,7 @@ class UpdateUserRequest extends FormRequest
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password'  => ['required', 'string', 'min:8', 'confirmed'],
             'roles_id'  => ['required', 'exists:roles,id'],
+            'is_active' => ['required', 'boolean'],
         ];
     }
 }

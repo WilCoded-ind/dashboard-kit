@@ -18,6 +18,7 @@ class UserRepository implements UserRepositoryInterface
             $q->where('name', 'like', "%$search%")
               ->orWhere('username', 'like', "%$search%")
               ->orWhere('email', 'like', "%$search%")
+              ->orWhere('is_active', 'like', "%$search%")
             )
 
             // sorting

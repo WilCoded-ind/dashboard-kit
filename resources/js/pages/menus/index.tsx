@@ -4,42 +4,97 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { dashboard } from '@/routes';
+import { router } from '@inertiajs/react';
+import { Trash, Pen, Eye } from 'lucide-react';
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 
-export default function Menus() {
+// datatable
+import { DataTable } from '@/components/ui/data-table';
+import { ColumnDef } from '@tanstack/react-table';
+
+// datatable
+const columns: ColumnDef<any>[] = [
+    {
+        accessorKey: 'name',
+        header: 'Menu Name',
+    },
+    {
+        accessorKey: 'slug',
+        header: 'Slug',
+    },
+    {
+        accessorKey: 'url',
+        header: 'URL',
+    },
+    {
+        accessorKey: 'menus.parent_id',
+        header: 'Parent Menu',
+    },
+    {
+        accessorKey: 'icon',
+        header: 'Icon',
+    },
+    {
+        id: 'actions',
+        header: 'Actions',
+        cell: ({ row }) => (
+            <div className="flex gap-2">
+                <a href={`/menus/${row.original.id}`}>
+                    <Button variant="secondary" size="sm">
+                        <Eye className="h-4 w-4" />
+                    </Button>
+                </a>
+                <a href={`/menus/${row.original.id}/edit`}>
+                    <Button variant="outline" size="sm">
+                        <Pen className="h-4 w-4" />
+                    </Button>
+                </a>
+                <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => {
+                        if (confirm('Yakin mau hapus menu ini?')) {
+                            router.delete(`/menus/${row.original.id}`);
+                        }
+                    }}
+                >
+                    <Trash className="h-4 w-4" />
+                </Button>
+            </div>
+        ),
+    },
+];
+
+export default function MenusIndex({ menus }: { menus: any }) {
+    const menuRows = menus?.data ?? [];
+
     return (
         <>
             <Head title="Menu Management" />
             <div className="max-w-8xl overflow-x-auto rounded-xl p-4 md:p-8">
                 {/* breadcrumbs */}
-                <div>
-                    {/* breadcrumbs sementara buat preview aja */}
-                    <nav
-                        className="flex justify-start pb-4"
-                        aria-label="Breadcrumb"
-                    >
-                        <ol className="inline-flex items-center space-x-1 md:space-x-3">
-                            <li className="inline-flex items-center">
-                                <a
-                                    href="/dashboard"
-                                    className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
-                                >
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li>
-                                <div className="flex items-center">
-                                    <ChevronRight className="h-4 w-4 text-gray-400" />
-                                    <a
-                                        href="#"
-                                        className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2"
-                                    >
-                                        Menu Management
-                                    </a>
-                                </div>
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
+                <Breadcrumb className="pb-3">
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/dashboard">
+                                Dashboard
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/menus">
+                                Menu Management
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
 
                 {/* header */}
                 <div className="mb-4">
@@ -69,108 +124,20 @@ export default function Menus() {
                 {/* garis pembatas */}
                 <div className="border-t border-gray-400/70 shadow" />
 
-                <div className="flex items-center justify-between gap-2 md:flex-row">
-                    {/* show entry */}
-                    <div className="mt-3 flex items-center justify-start gap-2">
-                        <span className="text-sm text-gray-600/90">Show</span>
-                        <select className="focus:ring-opacity-50 rounded border border-gray-300 bg-white px-2 py-1 text-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                        <span className="text-sm text-gray-600/90">
-                            entries
-                        </span>
-                    </div>
-
-                    {/* search */}
-                    <div className="mt-3 flex items-center justify-start gap-2">
-                        <Input
-                            type="text"
-                            id="search"
-                            placeholder="Type to search..."
-                        />
-                    </div>
-                </div>
-
                 {/* datatable */}
                 <div className="mt-3">
-                    {/* datatable sementara buat preview aja */}
-                    <Card>
-                        <table className="min-w-full divide-y divide-gray-300">
-                            <thead className="bg-gray-50">
-                                <tr>
-                                    <th
-                                        scope="col"
-                                        className="px-6 pb-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
-                                    >
-                                        Menu Name
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 pb-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
-                                    >
-                                        Parent
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 pb-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
-                                    >
-                                        Order
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 pb-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
-                                    >
-                                        Icon
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 pb-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
-                                    >
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-200 bg-white">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </Card>
-                </div>
-
-                {/* informasi data */}
-                <div className="mt-4 flex items-center justify-between gap-2">
-                    <p className="text-sm text-gray-600/90">
-                        Showing 1 to 10 of 57 entries
-                    </p>
-                </div>
-
-                {/* pagination */}
-                <div className="mt-4 flex items-center justify-end gap-2">
-                    <Button variant="outline" size="sm">
-                        Previous
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        Next
-                    </Button>
+                    <DataTable columns={columns} data={menuRows} />
                 </div>
             </div>
         </>
     );
 }
 
-Menus.layout = {
+MenusIndex.layout = {
     breadcrumbs: [
         {
-            title: 'Dashboard',
-            href: dashboard(),
+            title: 'Menu Management',
+            href: '/menus',
         },
     ],
 };
