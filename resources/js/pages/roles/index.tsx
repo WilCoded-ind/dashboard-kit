@@ -64,7 +64,7 @@ export default function RoleIndex({ roles }: { roles: any }) {
     return (
         <>
             <Head title="User Management" />
-            <div className="max-w-8xl overflow-x-auto rounded-xl p-4 md:p-8">
+            <div className="max-w-8xl overflow-x-auto rounded-xl p-2 md:px-6">
                 {/* breadcrumbs */}
                 <Breadcrumb className="pb-3">
                     <BreadcrumbList>

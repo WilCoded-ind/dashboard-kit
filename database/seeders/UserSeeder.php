@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             'Yuni Astuti',
         ];
 
-        foreach ($users as $fullName) {
+        foreach ($users as $index => $fullName) {
             $firstName = strtolower(strtok($fullName, ' '));
 
             User::query()->updateOrCreate(
@@ -48,6 +48,7 @@ class UserSeeder extends Seeder
                     'username' => $firstName,
                     'password' => bcrypt('123456'),
                     'roles_id' => fake()->randomElement($roleIds),
+                    'is_active' => $index < 10,
                 ],
             );
         }

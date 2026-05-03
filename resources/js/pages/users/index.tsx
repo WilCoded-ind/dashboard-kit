@@ -51,7 +51,7 @@ const columns: ColumnDef<any>[] = [
         accessorKey: 'is_active',
         header: 'Status',
         cell: ({ row }) => (
-            <Badge variant={row.original.is_active ? "default" : "destructive"}>
+            <Badge variant={row.original.is_active ? "outline" : "destructive"}>
                 {row.original.is_active ? 'Active' : 'Inactive'}
             </Badge>
         ),
